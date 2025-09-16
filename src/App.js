@@ -1,59 +1,52 @@
-import './App.css';
-import { Route ,Routes,Link } from 'react-router-dom';
-import PostList from './PostList';
-import PostDetails from './PostDetails';
-import { PostsContext } from './contexts/PostContext';
+import "./App.css";
+import TodoList from "./components/TodoList";
+import { useState, useEffect } from "react";
+import { TodoContext } from "./contexts/TodoContext";
+import { createTheme,ThemeProvider } from "@mui/material/styles";
 
-  const postsData = [
-  {
-    id:1,
-    title: "Post 1",
-    body: "Content for Post 1"
-  },
-  {
-    id:2,
-    title: "Post 2",
-    body: "Content for Post 2"
-  },
-  {
-    id:3,
-    title: "Post 3",
-    body: "Content for Post 3"
+
+
+const initialTodos = [
+  { id: 1, title: 'Learn React js', details: 'Study the basics of React', isCompleted: false },
+  { id: 2, title: 'Build a Todo App', details: 'Create a simple todo application', isCompleted: false },
+  { id: 3, title: 'Read a Book', details: 'Finish reading a book on JavaScript', isCompleted: false },
+];
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main:"#dd2c00"
+    },
+    secondary: {
+      main:"#004d40"
+    },
   }
-  ] 
+});
+
+
 export default function App() {
+  const [todosList, setTodosList] = useState(() => {
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : initialTodos;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todosList));
+  }, [todosList]);
 
   return (
-    <PostsContext.Provider value={ postsData }>
-      <div className="App">
-        <nav>
-          <Link style={{ textDecoration: 'none' , padding:'10px' , color:'black' , fontSize:'25px' }} to="/">Home</Link>
-          <Link style={{ textDecoration: 'none' , padding:'10px' , color:'black' , fontSize:'25px' }} to="/about">About</Link>
-          <Link style={{ textDecoration: 'none' , padding:'10px' , color:'black' , fontSize:'25px' }} to="/contact">Contact</Link>
-        <Link style={{ textDecoration: 'none' , padding:'10px' , color:'black' , fontSize:'25px' }} to="/post">Posts</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/post" element={<PostList />} />
-        <Route path="/PostDetails/:postId" element={<PostDetails />} />
-      </Routes>
-    </div>
-  </PostsContext.Provider>
+    <ThemeProvider theme={theme}>
+      <div className="App" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <TodoContext.Provider value={{ todosList, setTodosList }}>
+          <TodoList />
+        </TodoContext.Provider>
+      </div>
+    </ThemeProvider>
   );
 }
 
-function Home() {
-  return <h2>Home Page</h2>;
-}
 
-function About() {
-  return <h2>About Page</h2>;
-}
 
-function Contact() {
-  return <h2>Contact Page</h2>;
-}
+
+
 
