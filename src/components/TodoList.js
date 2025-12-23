@@ -109,7 +109,6 @@ export default function TodoList() {
                                         id="task-title"
                                         label="Task title "
                                         variant="outlined"
-                                        color="secondary"
                                         style={{ width: '100%' }}
                                         onChange={e => {
                                             setTitleInput(e.target.value)
@@ -127,7 +126,6 @@ export default function TodoList() {
                                         id="task-details"
                                         label="Task details "
                                         variant="outlined"
-                                        color="secondary"
                                         style={{ width: '100%' }}
                                         onChange={e => {
                                             setDetailsInput(e.target.value)
@@ -147,7 +145,6 @@ export default function TodoList() {
                                             padding: '20px'
                                         }}
                                         variant="contained"
-                                        color="secondary"
                                         onClick={() => {
                                             handleAddClick()
                                         }}

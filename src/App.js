@@ -30,10 +30,7 @@ const initialTodos = [
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#dd2c00'
-        },
-        secondary: {
-            main: '#004d40'
+            main: '#f50057'
         }
     }
 })
